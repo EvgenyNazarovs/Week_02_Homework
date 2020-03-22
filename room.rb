@@ -1,7 +1,7 @@
 class Room
 
-  attr_reader :name, :capacity
-  attr_accessor :playlist, :current_occupiers, :bar_tab
+  attr_reader :name, :capacity, :entry_fee
+  attr_accessor :playlist, :current_occupiers, :bar_tab, :cash_register
 
   def initialize(name, capacity, entry_fee)
     @name = name
@@ -10,6 +10,7 @@ class Room
     @current_occupiers = []
     @entry_fee = entry_fee
     @bar_tab = Hash.new(0)
+    @cash_register = 0
   end
 
   def add_song_to_room(song)
@@ -32,6 +33,7 @@ class Room
     if enough_money?(guest, @entry_fee) && has_capacity?()
           @current_occupiers << guest
           guest.wallet -= @entry_fee
+          @cash_register += @entry_fee
         elsif !has_capacity?()
           return "Not enough space in the room."
         elsif !enough_money?(guest, @entry_fee)
@@ -47,6 +49,20 @@ class Room
         @bar_tab[guest.name] = amount
       end
     else return "Not enough money."
+    end
+  end
+
+  def find_song_by_name(name)
+    return playlist.find {|song| song.name == name}
+  end
+
+  def close_tab(guest)
+    if enough_money?(guest, @bar_tab[guest.name])
+      guest.wallet -= @bar_tab[guest.name]
+      @cash_register += @bar_tab[guest.name]
+      @bar_tab.delete(guest.name)
+    else
+      return "Not enough money. We're calling the police."
     end
   end
 

@@ -35,5 +35,4 @@ def test_sell_item
   assert_equal(1, @bar.drinks_sold)
 end
 
-
 end

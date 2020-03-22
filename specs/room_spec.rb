@@ -19,16 +19,12 @@ class RoomTest < MiniTest::Test
     @west_end_girls = Song.new("West End Girls", "Pet Shop Boys")
     @how_soon_is_now = Song.new("How Soon Is Now", "The Smiths")
     @rhythm_of_the_night = Song.new("Rhythm of the Night", "Corona")
+    @ok_computer = Song.new("OK Computer", "Radiohead")
 
     @guest1 = Guest.new("Rob", 50.0, "Space Oddity")
     @guest2 = Guest.new("Caspar", 35.0, "All My Friends")
     @guest3 = Guest.new("Tom", 25.0, "West End Girls")
     @guest4 = Guest.new("Roger", 100.0, "Round and Round")
-
-    # @vodka = Vodka.new("Vodka", 40.0, 5.5)
-    # @beer = Beer.new("House Beer", 5.0, 4.5)
-    #
-    # @bar = Bar.new(@drinks, @rooms)
 
   end
 
@@ -100,13 +96,18 @@ class RoomTest < MiniTest::Test
     assert_equal("Not enough money.", @eighties_room.add_to_bar_tab(@guest1, 100.0))
   end
 
-end
+  def test_find_song_by_name
+    @nineties_room.add_song_to_room(@ok_computer)
+    @nineties_room.add_song_to_room(@rhythm_of_the_night)
+    assert_equal(@ok_computer, @nineties_room.find_song_by_name("OK Computer"))
+  end
 
-  # Guests could have a favourite song, and
-  # if their favourite song is on the room’s
-  # playlist, they can cheer loudly!
-  # (return a string like “Whoo!”)
-  # Rooms can keep track of the entry
-  # fees/spending of the guests - maybe add a bar tab/bar class?
-  # Add anything extra you think
-  # would be good to have at a karaoke venue!
+  def test_close_tab
+    @eighties_room.bar_tab = {"Roger" => 50.0}
+    @eighties_room.close_tab(@guest4)
+    assert_equal(nil, @eighties_room.bar_tab["Roger"])
+    assert_equal(50.0, @guest4.wallet)
+    assert_equal(50.0, @eighties_room.cash_register)
+  end
+
+end

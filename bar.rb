@@ -1,11 +1,10 @@
 class Bar
 
-  attr_accessor :drinks, :rooms, :cash_register, :drinks_sold
+  attr_accessor :drinks, :rooms, :drinks_sold
 
   def initialize(drinks, rooms)
     @drinks = drinks
     @rooms = rooms
-    @cash_register = Hash.new
     @drinks_sold = 0
   end
 
@@ -14,7 +13,5 @@ class Bar
       @drinks_sold += 1
     end
   end
-
-
 
 end
