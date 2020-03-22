@@ -1,6 +1,3 @@
-require('pry')
-require('pry-byebug')
-
 class Guest
 
   attr_reader :name, :favourite_song
