@@ -14,10 +14,9 @@ class Guest
 
   def cheer_to_favourite_song(room)
     room.playlist.map do |song|
-      # binding.pry
       return "Whoo!" if @favourite_song == song.name
-      end
     end
+  end
 
 
 

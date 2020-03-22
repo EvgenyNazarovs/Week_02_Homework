@@ -52,7 +52,7 @@ class RoomTest < MiniTest::Test
   end
 
   def test_guest_has_enough_money_to_join_room
-    assert_equal(true, @exclusive_room.enough_money?(@guest4))
+    assert_equal(true, @exclusive_room.enough_money?(@guest4, 20.0))
   end
 
   def test_check_money_and_add_guess_to_room
@@ -77,8 +77,24 @@ class RoomTest < MiniTest::Test
     assert_equal("Not enough money to enter the room.", @exclusive_room.add_guest_to_room(guest5))
   end
 
+  def test_initiate_bar_tab
+    @eighties_room.add_to_bar_tab(@guest3, 10.0)
+    assert_equal({@guest3 => 10.0}, @eighties_room.bar_tab)
   end
 
+  def test_add_to_existing_bar_tab
+    @eighties_room.add_to_bar_tab(@guest3, 10.0)
+    @eighties_room.add_to_bar_tab(@guest3, 10.0)
+    @eighties_room.add_to_bar_tab(@guest4, 35.0)
+    assert_equal(35.0, @eighties_room.bar_tab[@guest4])
+    assert_equal(20.0, @eighties_room.bar_tab[@guest3])
+  end
+
+  def test_add_to_bar_tab_not_enough_money
+    assert_equal("Not enough money.", @eighties_room.add_to_bar_tab(@guest1, 100.0))
+  end
+
+end
 
   # Guests could have a favourite song, and
   # if their favourite song is on the room’s
