@@ -5,6 +5,7 @@ Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
 require_relative('../room')
 require_relative('../guest')
 require_relative('../song')
+require_relative('../bar')
 
 class GuestTest < MiniTest::Test
 
@@ -28,7 +29,5 @@ class GuestTest < MiniTest::Test
     @naughties_room.add_song_to_room(@how_soon_is_now)
     assert_equal("Whoo!", @guest2.cheer_to_favourite_song(@naughties_room))
   end
-
-
 
 end

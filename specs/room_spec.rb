@@ -5,6 +5,7 @@ Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
 require_relative('../room')
 require_relative('../guest')
 require_relative('../song')
+require_relative('../bar')
 
 class RoomTest < MiniTest::Test
 
@@ -23,6 +24,11 @@ class RoomTest < MiniTest::Test
     @guest2 = Guest.new("Caspar", 35.0, "All My Friends")
     @guest3 = Guest.new("Tom", 25.0, "West End Girls")
     @guest4 = Guest.new("Roger", 100.0, "Round and Round")
+
+    # @vodka = Vodka.new("Vodka", 40.0, 5.5)
+    # @beer = Beer.new("House Beer", 5.0, 4.5)
+    #
+    # @bar = Bar.new(@drinks, @rooms)
 
   end
 
@@ -79,15 +85,15 @@ class RoomTest < MiniTest::Test
 
   def test_initiate_bar_tab
     @eighties_room.add_to_bar_tab(@guest3, 10.0)
-    assert_equal({@guest3 => 10.0}, @eighties_room.bar_tab)
+    assert_equal({"Tom" => 10.0}, @eighties_room.bar_tab)
   end
 
   def test_add_to_existing_bar_tab
     @eighties_room.add_to_bar_tab(@guest3, 10.0)
     @eighties_room.add_to_bar_tab(@guest3, 10.0)
     @eighties_room.add_to_bar_tab(@guest4, 35.0)
-    assert_equal(35.0, @eighties_room.bar_tab[@guest4])
-    assert_equal(20.0, @eighties_room.bar_tab[@guest3])
+    assert_equal(35.0, @eighties_room.bar_tab["Roger"])
+    assert_equal(20.0, @eighties_room.bar_tab["Tom"])
   end
 
   def test_add_to_bar_tab_not_enough_money

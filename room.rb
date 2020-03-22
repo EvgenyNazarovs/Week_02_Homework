@@ -41,10 +41,10 @@ class Room
 
   def add_to_bar_tab(guest, amount)
     if enough_money?(guest, amount)
-      if @bar_tab[guest]
-        @bar_tab[guest] += amount
+      if @bar_tab[guest.name]
+        @bar_tab[guest.name] += amount
       else
-        @bar_tab[guest] = amount
+        @bar_tab[guest.name] = amount
       end
     else return "Not enough money."
     end

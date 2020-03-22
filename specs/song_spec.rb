@@ -5,6 +5,7 @@ Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
 require_relative('../room')
 require_relative('../guest')
 require_relative('../song')
+require_relative('../bar')
 
 class SongTest < MiniTest::Test
 
